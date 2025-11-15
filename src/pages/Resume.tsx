@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Download, ExternalLink } from "lucide-react";
+import { Download, ExternalLink, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Resume = () => {
@@ -48,8 +48,14 @@ const Resume = () => {
                   Blockchain Developer | Full Stack Engineer | Mobile Developer
                 </p>
                 <div className="flex flex-wrap gap-4 text-muted-foreground">
-                  <span>📧 shashi007.iitkgp@gmail.com</span>
-                  <span>📱 +91 6378454339</span>
+                  <span className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-primary" />
+                    shashi007.iitkgp@gmail.com
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-primary" />
+                    +91 6378454339
+                  </span>
                 </div>
               </div>
 

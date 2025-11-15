@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
+import { NavLink } from "./NavLink";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -18,30 +18,26 @@ const navItems = [
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-lg">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold gradient-text">
-            SK
-          </Link>
+          <NavLink to="/" activeClassName="text-primary">
+            <span className="text-2xl font-bold gradient-text">SK</span>
+          </NavLink>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
+              <NavLink 
+                key={item.path} 
                 to={item.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname === item.path
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                }`}
+                className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
+                activeClassName="!text-primary"
               >
                 {item.name}
-              </Link>
+              </NavLink>
             ))}
           </div>
 
@@ -49,7 +45,7 @@ const Navigation = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X /> : <Menu />}
@@ -64,22 +60,20 @@ const Navigation = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-card border-t border-border"
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-card/95 backdrop-blur-lg border-t border-border/50"
           >
             <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
               {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
+                <NavLink 
+                  key={item.path} 
+                  to={item.path} 
                   onClick={() => setIsOpen(false)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    location.pathname === item.path
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
+                  className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
+                  activeClassName="!text-primary"
                 >
                   {item.name}
-                </Link>
+                </NavLink>
               ))}
             </div>
           </motion.div>

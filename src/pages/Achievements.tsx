@@ -78,9 +78,26 @@ const Achievements = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="mt-16 flex justify-center gap-8 flex-wrap"
           >
-            <div className="text-6xl animate-float">🏆</div>
-            <div className="text-6xl animate-float" style={{ animationDelay: "0.5s" }}>🥇</div>
-            <div className="text-6xl animate-float" style={{ animationDelay: "1s" }}>🏅</div>
+            <motion.div 
+              className="bg-primary/10 p-6 rounded-full animate-float"
+              whileHover={{ scale: 1.1, rotate: 10 }}
+            >
+              <Trophy className="h-16 w-16 text-neon-cyan" />
+            </motion.div>
+            <motion.div 
+              className="bg-primary/10 p-6 rounded-full animate-float" 
+              style={{ animationDelay: "0.5s" }}
+              whileHover={{ scale: 1.1, rotate: -10 }}
+            >
+              <Award className="h-16 w-16 text-neon-purple" />
+            </motion.div>
+            <motion.div 
+              className="bg-primary/10 p-6 rounded-full animate-float" 
+              style={{ animationDelay: "1s" }}
+              whileHover={{ scale: 1.1, rotate: 10 }}
+            >
+              <Medal className="h-16 w-16 text-neon-blue" />
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
