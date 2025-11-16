@@ -1,19 +1,47 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, Github, Linkedin, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
+    setLoading(true);
+
+    const { error } = await supabase
+      .from("contact_submissions")
+      .insert({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    }
+    setLoading(false);
   };
 
   return (
@@ -114,6 +142,8 @@ const Contact = () => {
                     placeholder="Your name"
                     className="bg-card border-border focus:border-primary"
                     required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
                 <div>
@@ -123,6 +153,8 @@ const Contact = () => {
                     placeholder="your.email@example.com"
                     className="bg-card border-border focus:border-primary"
                     required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
                 <div>
@@ -131,14 +163,17 @@ const Contact = () => {
                     placeholder="Your message..."
                     className="bg-card border-border focus:border-primary min-h-[150px]"
                     required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
                 <Button
                   type="submit"
                   size="lg"
                   className="w-full bg-primary hover:bg-primary/90"
+                  disabled={loading}
                 >
-                  Send Message
+                  {loading ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>

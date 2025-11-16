@@ -15,6 +15,11 @@ import PORs from "./pages/PORs";
 import Achievements from "./pages/Achievements";
 import Resume from "./pages/Resume";
 import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/admin/Dashboard";
+import ProfileSettings from "./pages/admin/ProfileSettings";
+import ManageSkills from "./pages/admin/ManageSkills";
+import ManageContacts from "./pages/admin/ManageContacts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +55,11 @@ const App = () => (
             <Route path="/achievements" element={<PageWrapper><Achievements /></PageWrapper>} />
             <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
             <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/profile" element={<ProfileSettings />} />
+            <Route path="/admin/skills" element={<ManageSkills />} />
+            <Route path="/admin/contacts" element={<ManageContacts />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
